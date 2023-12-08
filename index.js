@@ -99,26 +99,6 @@ app.post("/add", async (req, res) => {
   res.redirect("/search");
 })
 
-app.get("/inspector", async (req, res) => {
-  res.render("inspector.ejs");
-})
-
-app.post("/inspector", async (req, res) => {
-  try {
-    console.log(req.body["searchBox"]);
-    const result = await axios.get(apiURL + "/Users/" + userID + "/Items/" + req.body["searchBox"], {
-        params: {
-            api_key: apiKey,
-            //searchTerm: req.body["searchBox"],
-        },
-    });
-    res.render("inspector.ejs", {content: JSON.stringify(result.data)}); 
-  } catch (error) {
-      console.log(error.message)
-      res.status(404).send(error.message);
-  }
-});
-
 app.get("/manage", async (req, res) => {
   res.render("manage.ejs", {poll: poll});
 })
