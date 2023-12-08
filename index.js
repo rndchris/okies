@@ -107,11 +107,6 @@ app.post("/inspector", async (req, res) => {
   }
 });
 
-app.get("/build", async (req, res) => {
-  res.send("Under Construction");
-  //res.render("build.ejs");
-})
-
 app.get("/manage", async (req, res) => {
   res.render("manage.ejs", {poll: poll});
 })
