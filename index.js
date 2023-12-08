@@ -165,6 +165,27 @@ app.post("/save", async (req, res) => {
   res.redirect("/results");
 })
 
+//Dump Jellyfin UserIDs to server output
+app.get("/userID", async (req, res) => {
+  try {
+    const result = await axios.get(apiURL + "/Users", {
+        params: {
+            api_key: apiKey,
+        },
+    });
+    console.log("**************************************")
+    console.log("Dumping all userIDs from Jellyfin API")
+    console.log("**************************************")
+    for (let i = 0; i < result.data.length; i++){
+      console.log(result.data[i].Name + " " + result.data[i].Id)
+    }
+    res.send("Request Processed. Check Server."); 
+  } catch (error) {
+      console.log(error.message)
+      res.status(404).send(error.message);
+  }
+})
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
