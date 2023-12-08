@@ -1,17 +1,35 @@
 <%- include("partials/head.ejs") %>
-<form action="/search" method="POST">
-    <input type="text" name="searchBox">
-    <input type="submit" value="Search!">
-</form>
+    <h3>Library Search</h3>
+    <form action="/search" method="POST">
+        <input type="text" name="searchBox">
+        <input type="submit" value="Search!">
+    </form>
+    <a href="/">Return to Voting</a><br>
+    <a href="/results">Results</a>
+
 <div>
     <% if (locals.content){ %>
         <table>
-            <tr><th>Title</th><th>Year</th><th>ItemID</th></tr>
+            <tr><th>Title</th><th>Year</th><th>ItemID</th><th>Add to Poll</th></tr>
             <% for (let i = 0; i < content.SearchHints.length; i++){ %>
                 <tr>
                     <td class="list"><%= content.SearchHints[i].Name %></td>
                     <td><%= content.SearchHints[i].ProductionYear %></td>
                     <td><%= content.SearchHints[i].ItemId %></td>
+                    <td>
+                        <form action="/add" method="POST">
+                            <select name="question">
+                                <% for (let k = 0; k < poll.length; k++){ %>
+                                    <option id="dropdown" value="<%= k %>">List <%= k %></option>
+                                <% } %>
+                            </select>
+                            <input type="hidden" name="itemID" value="<%= content.SearchHints[i].ItemId %>" id="itemID">
+                            <input
+                                type="submit"
+                                id="<%= content.SearchHints[i].ItemId %>"
+                                value="Add">
+                        </form>
+                    </td>
                 </tr>
             <% } %>
         </table>

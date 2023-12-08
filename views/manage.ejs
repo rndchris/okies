@@ -1,0 +1,67 @@
+<%- include("partials/head.ejs") %>
+
+<div class="container">
+        <div class="question">
+            <a href="/search">
+                <h2>Add Items To Lists</h2>
+            </a>
+        </div>
+        <form action="/manage" method="POST">
+                <div class="question">
+                    <h2>Remove Items From Lists</h2>
+                </div>
+                <% for (var i = 0; i < poll.length; i++) { %>
+                    <div class="question">
+                        <h3><%= poll[i].question %></h3>
+                        <% for (var k = 0; k < poll[i].options.length; k++) {%>
+                            <div class="option">
+                                <input type="checkbox" value="<%= poll[i].options[k] %>" name="q<%= i %>">
+                                <div>
+                                    <img src="<%= poll[i].image[k] %>" alt="<%= poll[i].info[k].title %> title image">
+                                    <div>
+                                        <h3><%= poll[i].info[k].title %></h3>
+                                        <h4>Audience Rating: <%= poll[i].info[k].communityRating %>/10</h4>
+                                        <h4><%= poll[i].info[k].taglines %></h4>
+                                        <p><%= poll[i].info[k].overview %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
+            <div class="bottom-buttons">
+                <input type="submit" value="Remove Selected" class="button">
+            </div>
+        </form>
+</div>
+<hr>
+<h2>List Management</h2>
+<div class="container">
+    <div class="question">
+        <h2>Add List</h2>
+        <form action="/create-list" method="POST">
+            <input type="text" name="question">
+            <input type="submit" value="Create New List">
+        </form>
+    </div>
+    <div class="question">
+        <h2>Remove List</h2>
+        <form action="/remove-list" method="POST">
+            <select name="question">
+                <% for (let j = 0; j < poll.length; j++){ %>
+                    <option value="<%= j %>" name="list"><%= poll[j].question %></option>
+                <% } %>
+            </select>
+            <input type="submit" value="Delete List">
+        </form>
+    </div>
+    <div class="question">
+        <h2>Reset Votes</h2>
+        <form action="/reset" method="POST">
+            <input type="hidden" name="reset" value="reset">
+            <input type="submit" value="RESET ALL VOTES">
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -70,6 +70,12 @@ h3{
     gap: 50px;
 }
 
+.container form{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
 .question{
     padding: 20px;
     border-radius: 15px;
@@ -77,6 +83,7 @@ h3{
 }
 
 .bottom-buttons{
+    margin-bottom: 50px;
     display: flex;
     justify-content: center;
 }

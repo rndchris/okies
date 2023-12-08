@@ -73,12 +73,19 @@ app.post("/search", async (req, res) => {
             searchTerm: req.body["searchBox"],
         },
     });
-    res.render("search.ejs", {content: result.data}); 
+    res.render("search.ejs", {content: result.data, poll: poll}); 
   } catch (error) {
       console.log(error.message)
       res.status(404).send(error.message);
   }
 });
+
+app.post("/add", async (req, res) => {
+  poll[req.body["question"]].options.push(req.body["itemID"]);
+  poll[req.body["question"]].votes.push(0);
+  updateOptions();
+  res.redirect("/search");
+})
 
 app.get("/inspector", async (req, res) => {
   res.render("inspector.ejs");
@@ -99,6 +106,56 @@ app.post("/inspector", async (req, res) => {
       res.status(404).send(error.message);
   }
 });
+
+app.get("/build", async (req, res) => {
+  res.send("Under Construction");
+  //res.render("build.ejs");
+})
+
+app.get("/manage", async (req, res) => {
+  res.render("manage.ejs", {poll: poll});
+})
+
+app.post("/manage", async (req, res) => {
+  console.log(req.body)
+
+  //remove items from list
+  for (let i = 0; i < Object.keys(req.body).length; i++){
+    //console.log(Object.keys(req.body)[i] + " " + req.body[Object.keys(req.body)[i]]);
+    for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
+      var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
+      poll[questionNumber].options = poll[questionNumber].options.filter(e => e !== req.body[Object.keys(req.body)[i]][k]);
+      console.log(req.body[Object.keys(req.body)[i]][k]);
+    }
+  }
+
+  res.render("manage.ejs", {poll: poll});
+})
+
+app.post("/create-list", async (req, res) => {
+  console.log(req.body);
+  let newPoll = {
+    question: req.body.question,
+    options: [],
+    votes: [],
+    info: [],
+    image: [],
+  }
+  poll.push(newPoll);
+  res.redirect("/manage");
+})
+
+app.post("/remove-list", async (req, res) => {
+  console.log(req.body);
+  poll.splice(req.body.question, 1);
+  res.redirect("/manage");
+})
+
+app.post("/reset", async (req, res) => {
+  console.log(req.body);
+  zeroVotes(poll);
+  res.redirect("/results");
+})
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
