@@ -16,12 +16,14 @@ fs.readFile("./config.json", "utf8", (err, data) => {
   apiKey = config.jellyfinKey.valueOf();
   userID = config.jellyfinUserID.valueOf();
   apiURL = config.jellyfinURL.valueOf();
-  fs.readFile("./poll.json", "utf8", (err, data) => {
-    if (err) throw err;
-    poll = JSON.parse(data);
-    updateOptions();
-    zeroVotes(poll);
-  });
+  if (config.loadJSON){
+    fs.readFile(config.pollJSON, "utf8", (err, data) => {
+      if (err) throw err;
+      poll = JSON.parse(data);
+      updateOptions();
+      zeroVotes(poll);
+    });
+  }
 })
 
 function zeroVotes(poll){

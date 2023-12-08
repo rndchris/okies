@@ -31,13 +31,37 @@ If you'd like to run or customize your own server.
     > node ./index.js
 4. Access the web app in your web browser. (http://localhost:3500/)
 
-## Set-up
+## Set up through web-interface
+
+1. Create config.json in the directory of the repository. Add your API_Key, UserID, and jellyfinURL. Set loadJSON to false.
+
+    >{  
+    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinKey": "YOUR_JELLYFIN_API_KEY",  
+    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinUserID": "YOUR_JELLYFIN_USERID"
+    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinURL": "https://YOUR_JELLYFIN_SERVER_URL"  
+    >&nbsp;&nbsp;&nbsp;&nbsp;"loadJSON": false
+    >}
+
+2. Go to hostname:PORT/manage;
+
+3. Create a new list.
+
+4. Click Add Items to Lists or Go to http://localhost:3500/search.
+
+5. Search for items from your library by name, select list # from the dropdown (will be 0 if you only have one list), and then click Add.
+
+6. When finished adding, you can vote at http://localhost:3500/
+
+
+## Manual Setup
 1. Create config.json file with a Jellyfin API key and UserID.
 
     >{  
     >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinKey": "YOUR_JELLYFIN_API_KEY",  
     >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinUserID": "YOUR_JELLYFIN_USERID"
     >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinURL": "https://YOUR_JELLYFIN_SERVER_URL"  
+    >&nbsp;&nbsp;&nbsp;&nbsp;"loadJSON": true,
+    >&nbsp;&nbsp;&nbsp;&nbsp;"pollJSON": "LOCATION_OF_POLL_JSON"
     >}
 
 2. Create a poll.json file with your movies.
@@ -57,8 +81,4 @@ If you'd like to run or customize your own server.
 
 ### Where do I find IDs?
 
-Boot up the server and navigate to localhost:PORT/search. The search box will search your Jellyfin user library to help you find Movie IDs.
-
-### Why can't I just click to add movies from search?
-
-I haven't developed it yet. It's on my list.
+Boot up the server and navigate to localhost:PORT/search. The search box will search your Jellyfin user library to help you find Movie IDs. You can also directly add to existing lists from the search page.
