@@ -6,6 +6,7 @@ import fs from "fs";
 const app = express();
 const port = 3500;
 var apiKey;
+var apiURL;
 var userID;
 var poll;
 
@@ -14,6 +15,7 @@ fs.readFile("./config.json", "utf8", (err, data) => {
   var config = JSON.parse(data);
   apiKey = config.jellyfinKey.valueOf();
   userID = config.jellyfinUserID.valueOf();
+  apiURL = config.jellyfinURL.valueOf();
   fs.readFile("./poll.json", "utf8", (err, data) => {
     if (err) throw err;
     poll = JSON.parse(data);
@@ -63,7 +65,7 @@ app.get("/search", async (req, res) => {
 app.post("/search", async (req, res) => {
   try {
     console.log(req.body["searchBox"]);
-    const result = await axios.get("https://jellyfin.eternaldisco.com/Search/Hints", {
+    const result = await axios.get(apiURL + "/Search/Hints", {
         params: {
             api_key: apiKey,
             searchTerm: req.body["searchBox"],
@@ -91,7 +93,7 @@ async function updateOptions(){
 
 async function getInfo(libraryID){
   try {
-      const result = await axios.get("https://jellyfin.eternaldisco.com/Users/" + userID + "/Items/" + libraryID, {
+      const result = await axios.get(apiURL + "/Users/" + userID + "/Items/" + libraryID, {
           params: {
               api_key: apiKey,
           },
@@ -120,7 +122,7 @@ async function getInfo(libraryID){
 
 async function getImages(libraryID){
   try {
-      const result = await axios.get("https://jellyfin.eternaldisco.com/Items/" + libraryID + "/RemoteImages", {
+      const result = await axios.get(apiURL + "/Items/" + libraryID + "/RemoteImages", {
           params: {
               api_key: apiKey,
           },

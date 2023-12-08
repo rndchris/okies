@@ -36,7 +36,8 @@ If you'd like to run or customize your own server.
 
     >{  
     >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinKey": "YOUR_JELLYFIN_API_KEY",  
-    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinUserID": "YOUR_JELLYFIN_USERID"  
+    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinUserID": "YOUR_JELLYFIN_USERID"
+    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinURL": "https://YOUR_JELLYFIN_SERVER_URL"  
     >}
 
 2. Create a poll.json file with your movies.
