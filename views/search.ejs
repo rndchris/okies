@@ -10,12 +10,11 @@
 <div>
     <% if (locals.content){ %>
         <table>
-            <tr><th>Title</th><th>Year</th><th>ItemID</th><th>Add to Poll</th></tr>
+            <tr><th>Title</th><th>Year</th><th>Add to Poll</th></tr>
             <% for (let i = 0; i < content.SearchHints.length; i++){ %>
                 <tr>
                     <td class="list"><%= content.SearchHints[i].Name %></td>
                     <td><%= content.SearchHints[i].ProductionYear %></td>
-                    <td><%= content.SearchHints[i].ItemId %></td>
                     <td>
                         <form action="/add" method="POST">
                             <select name="question">
