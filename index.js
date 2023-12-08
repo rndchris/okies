@@ -10,6 +10,7 @@ var apiURL;
 var userID;
 var poll = [];
 
+//read in config file and poll JSON at startup
 fs.readFile("./config.json", "utf8", (err, data) => {
   if (err) throw err;
   var config = JSON.parse(data);
@@ -26,6 +27,7 @@ fs.readFile("./config.json", "utf8", (err, data) => {
   }
 })
 
+//Replace undefined vote indexes with 0. Needed to increment votes properly at startup. Doesn't erase non-zero votes
 function softZeroVotes(poll){
   for (let i = 0; i < poll.length; i++){
     for (let k = 0; k < poll[i].options.length; k++){
@@ -36,6 +38,7 @@ function softZeroVotes(poll){
   }
 }
 
+//Replace all vote counts with 0, including undefined counts.
 function zeroVotes(poll){
   for (let i = 0; i < poll.length; i++){
     for (let k = 0; k < poll[i].options.length; k++){
@@ -59,6 +62,7 @@ app.post("/submit", (req, res) => {
 
   //Tally votes from ballot
   for (let i = 0; i < Object.keys(req.body).length; i++){
+    //Preserve this line for potential testing
     //console.log(Object.keys(req.body)[i] + " " + req.body[Object.keys(req.body)[i]]);
     for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
       var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
@@ -92,6 +96,7 @@ app.post("/search", async (req, res) => {
   }
 });
 
+//Add new movies to lists
 app.post("/add", async (req, res) => {
   poll[req.body["question"]].options.push(req.body["itemID"]);
   poll[req.body["question"]].votes.push(0);
@@ -103,15 +108,17 @@ app.get("/manage", async (req, res) => {
   res.render("manage.ejs", {poll: poll});
 })
 
+//Remove items from list endpoint
 app.post("/manage", async (req, res) => {
   console.log(req.body)
 
-  //remove items from list
+  //parse input to remove items from list
   for (let i = 0; i < Object.keys(req.body).length; i++){
     //console.log(Object.keys(req.body)[i] + " " + req.body[Object.keys(req.body)[i]]);
     for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
       var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
       poll[questionNumber].options = poll[questionNumber].options.filter(e => e !== req.body[Object.keys(req.body)[i]][k]);
+      console.log("Movies Removed")
       console.log(req.body[Object.keys(req.body)[i]][k]);
     }
   }
@@ -119,6 +126,7 @@ app.post("/manage", async (req, res) => {
   res.render("manage.ejs", {poll: poll});
 })
 
+//Create a new poll list for movies
 app.post("/create-list", async (req, res) => {
   console.log(req.body);
   let newPoll = {
@@ -132,18 +140,22 @@ app.post("/create-list", async (req, res) => {
   res.redirect("/manage");
 })
 
+//Remove existing poll list
 app.post("/remove-list", async (req, res) => {
   console.log(req.body);
   poll.splice(req.body.question, 1);
   res.redirect("/manage");
 })
 
+//Endpoint to erase all votes
 app.post("/reset", async (req, res) => {
   console.log(req.body);
   zeroVotes(poll);
   res.redirect("/results");
 })
 
+//Save current poll to JSON on disk. Decision to hard code file to simply development.
+//Use-case of app doesn't justify adding more config to the file for where to save to disk for increased set-up complexity.
 app.post("/save", async (req, res) => {
   console.log(req.body);
   console.log("Saving poll to disk");
@@ -157,6 +169,7 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
+//This function pulls metadata from Jellyfin API for movies in poll
 async function updateOptions(){
   for (let i = 0; i < poll.length; i++){
     for (let k = 0; k < poll[i].options.length; k++){
@@ -166,6 +179,7 @@ async function updateOptions(){
   }
 }
 
+//Hit jellyfin user library enpoint for basic movie data.
 async function getInfo(libraryID){
   try {
       const result = await axios.get(apiURL + "/Users/" + userID + "/Items/" + libraryID, {
@@ -196,6 +210,8 @@ async function getInfo(libraryID){
   return itemInfo;
 } 
 
+//Hit jellyfin endpoint for link to public database image.
+//For now, just pulls first remote primary image URL. Should probably revise to pull image directly from Jellyfin library db.
 async function getImages(libraryID){
   try {
       const result = await axios.get(apiURL + "/Items/" + libraryID + "/RemoteImages", {
@@ -203,8 +219,7 @@ async function getImages(libraryID){
               api_key: apiKey,
           },
   });
-      //console.log(result.data);
-      //var data = JSON.parse(result.data);
+
       var data = result.data;
 
       //filter down to only primary images
@@ -218,7 +233,7 @@ async function getImages(libraryID){
       return primaryImages[0]
       
   } catch (error) {
-      //console.log(error.message)
+      console.log(error.message)
       return "UhOh.jpg";
   }
 }
