@@ -8,7 +8,7 @@ const port = 3500;
 var apiKey;
 var apiURL;
 var userID;
-var poll;
+var poll = [];
 
 fs.readFile("./config.json", "utf8", (err, data) => {
   if (err) throw err;
