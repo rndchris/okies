@@ -21,10 +21,20 @@ fs.readFile("./config.json", "utf8", (err, data) => {
       if (err) throw err;
       poll = JSON.parse(data);
       updateOptions();
-      zeroVotes(poll);
+      softZeroVotes(poll);
     });
   }
 })
+
+function softZeroVotes(poll){
+  for (let i = 0; i < poll.length; i++){
+    for (let k = 0; k < poll[i].options.length; k++){
+     if (!poll[i].votes[k]){ 
+      poll[i].votes[k] = 0;
+     }
+    }
+  }
+}
 
 function zeroVotes(poll){
   for (let i = 0; i < poll.length; i++){
@@ -151,6 +161,15 @@ app.post("/remove-list", async (req, res) => {
 app.post("/reset", async (req, res) => {
   console.log(req.body);
   zeroVotes(poll);
+  res.redirect("/results");
+})
+
+app.post("/save", async (req, res) => {
+  console.log(req.body);
+  console.log("Saving poll to disk");
+  fs.writeFile("./save.json", JSON.stringify(poll),(err, data) => {
+    if (err) throw err;
+  })
   res.redirect("/results");
 })
 
