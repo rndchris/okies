@@ -1,0 +1,7 @@
+{
+    "jellyfinKey": "YOUR_JELLYFIN_API_KEY",
+    "jellyfinUserID": "YOUR_JELLYFIN_USERID",
+    "jellyfinURL": "YOUR_JELLYFIN_SERVER_URL",
+    "loadJSON": true,
+    "pollJSON": "./save.json"
+}

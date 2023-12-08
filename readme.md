@@ -1,9 +1,25 @@
 # Okies: Movie Chooser
 A program to make it easier to pick movies to watch in a group. Make a list of the movies you're interested in watching, and then vote on which movies everyone is willing to watch.
 
+## Screenshots
+Yes, at present, it looks like something right out of the 90s, and the CSS is a little wonky in places. however, it is functional. Future updates I'm planning on making it look prettier and more modern.
+
+This is how the polls currently look.  
+
+<img src="screenshots/poll-sample.png" alt="Poll Sample" width="300"/>
+
+The search and add movies screen.
+
+<img src="screenshots/search.png" alt="Search" width="300"/>
+
+The results screen.  
+
+<img src="screenshots/results.png" alt="Results" width="300"/>
+
+
 ## Installing
 
-If you'd like to run or customize your own server.
+Setting up your own instance of Okies.
 
 ### Prereqs
 - A current version of NodeJS installed
@@ -33,17 +49,31 @@ If you'd like to run or customize your own server.
 
 ## Add your API Keys and Jellyfin UserID
 
-Edit the default config.json in the directory of the repository. Add your API_Key, UserID, and jellyfinURL.
+1. Copy the default config.json.sample to config.json in the repository folder.
+2. Add your API_Key, UserID, and jellyfinURL.
+    - You can get an API key for your Jellyfin server from the admin dashboard API key settings page.
+    - See Jellyfin documentation for additional information
 
-    >{  
-    > &nbsp;&nbsp;&nbsp;&nbsp;"jellyfinKey": "YOUR_JELLYFIN_API_KEY",  
-    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinUserID": "YOUR_JELLYFIN_USERID"
-    >&nbsp;&nbsp;&nbsp;&nbsp;"jellyfinURL": "YOUR_JELLYFIN_SERVER_URL"  
-    >}
+### Jellyfin UserID 
+Your UserID is the long UserID used by the Jellyfin API, not your username. If you don't know how to use the API to get this, you can have Okies dump the full userlist for you.
+
+1. Add your API key and Server URL for Jellyfin to config.json
+
+2. Manually run Okies by either executing "node index.js" OR running "docker compose up" without the -d (detached) flag.
+
+3. Go to your Web browser and navigate to localhost:PORT/userID.
+
+4. The server will dump all current userIDs from your jellyfin server in the server log.
+
+5. Copy and paste the userID for the library that Okies should use for searches and metadata.
+
+6. Press ctrl+c in the server terminal window to stop Okies
 
 ## Finish set-up through the Web Interface
 
-1. Recreate/create the container (docker compose up -d) or restart node.
+1. Restart the server.
+    - Recreate/create the container (docker compose up -d) 
+    - or restart node if not using Docker
 
 2. Access the web app in your web browser. (http://localhost:PORT/)
 
