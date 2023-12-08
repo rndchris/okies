@@ -1,0 +1,10 @@
+<%- include("partials/head.ejs") %>
+<form action="/inspector" method="POST">
+    <input type="text" name="searchBox">
+    <input type="submit" value="Inspect!">
+</form>
+<div>
+    <% if (locals.content){ %>
+        <%- content %>
+    <% } %>
+</div>
