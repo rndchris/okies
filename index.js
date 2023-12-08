@@ -36,7 +36,9 @@ app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.render("./index.ejs", {poll: poll});
+  res.render("./index.ejs", {
+    poll: poll,
+    apiURL: apiURL});
 });
 
 app.post("/submit", (req, res) => {
@@ -55,7 +57,7 @@ app.post("/submit", (req, res) => {
 });
 
 app.get("/results", (req, res) => {
-  res.render("./results.ejs", {poll: poll});
+  res.render("./results.ejs", {poll: poll, apiURL: apiURL});
 });
 
 app.get("/search", async (req, res) => {
@@ -72,6 +74,26 @@ app.post("/search", async (req, res) => {
         },
     });
     res.render("search.ejs", {content: result.data}); 
+  } catch (error) {
+      console.log(error.message)
+      res.status(404).send(error.message);
+  }
+});
+
+app.get("/inspector", async (req, res) => {
+  res.render("inspector.ejs");
+})
+
+app.post("/inspector", async (req, res) => {
+  try {
+    console.log(req.body["searchBox"]);
+    const result = await axios.get(apiURL + "/Users/" + userID + "/Items/" + req.body["searchBox"], {
+        params: {
+            api_key: apiKey,
+            //searchTerm: req.body["searchBox"],
+        },
+    });
+    res.render("inspector.ejs", {content: JSON.stringify(result.data)}); 
   } catch (error) {
       console.log(error.message)
       res.status(404).send(error.message);
@@ -98,11 +120,12 @@ async function getInfo(libraryID){
               api_key: apiKey,
           },
   });
-
       var itemInfo = {
           title: result.data.Name,
           taglines: result.data.Taglines,
           overview: result.data.Overview,
+          //critic: result.data.CriticRating,
+          communityRating: result.data.CommunityRating,
       }
 
       //console.log(itemInfo)

@@ -8,11 +8,13 @@
                     <% for (var k = 0; k < poll[i].options.length; k++) {%>
                         <div class="option">
                             <input type="checkbox" value="<%= k %>" id="q<%= i %>o<%= k %>" name="q<%= i %>">
-                            <!--<label for="q<%= i %>o<%= k %>" ><%= poll[i].info[k].title %></label>-->
                             <div>
-                                <img src="<%= poll[i].image[k] %>" alt="<%= poll[i].info[k].title %> title image">
+                                <a href="<%= apiURL %>/web/index.html#!/details?id=<%= poll[i].options[k] %>">
+                                    <img src="<%= poll[i].image[k] %>" alt="<%= poll[i].info[k].title %> title image">
+                                </a>
                                 <div>
                                     <h3><%= poll[i].info[k].title %></h3>
+                                    <h4>Audience Rating: <%= poll[i].info[k].communityRating %>/10</h4>
                                     <h4><%= poll[i].info[k].taglines %></h4>
                                     <p><%= poll[i].info[k].overview %></p>
                                 </div>

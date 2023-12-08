@@ -7,7 +7,15 @@
             <table>
                 <tr><th>Cover Art</th><th>Movie</th><th>Votes</th></tr>
                 <% for (let k = 0; k < poll[i].options.length; k++){ %>
-                    <tr><td><img class="tiny" src="<%= poll[i].image[k] %>" alt="<%= poll[i].info[k].title %> title image"></td><td><%= poll[i].info[k].title %></td><td><%= poll[i].votes[k]%></td></tr>
+                    <tr>
+                        <td>
+                            <a href="<%= apiURL %>/web/index.html#!/details?id=<%= poll[i].options[k] %>">
+                                <img class="tiny" src="<%= poll[i].image[k] %>" alt="<%= poll[i].info[k].title %> title image">
+                            </a>
+                        </td>
+                        <td><%= poll[i].info[k].title %></td>
+                        <td><%= poll[i].votes[k]%></td>
+                    </tr>
                 <% } %>
             </table>
         </div>
