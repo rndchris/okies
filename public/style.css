@@ -1,0 +1,126 @@
+html{
+    background-color: lightskyblue;
+    font-family: sans-serif;
+}
+
+img{
+    width: 200px;
+}
+
+.tiny{
+    width: 100px;
+}
+
+.button{
+    margin-top: 20px;
+    font-size: x-large;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 30px;
+}
+
+table{
+    min-width: 500px;
+}
+
+table, th, td{
+    border: solid black;
+    border-collapse: collapse;
+}
+
+table tr td:nth-child(1){
+    text-align: center;
+}
+
+table tr td:nth-child(3){
+    text-align: center;
+}
+
+table tr td:nth-child(2){
+    text-align: center;
+    font-size: large;
+}
+
+td{padding: 5px;}
+
+label{
+    font-size: large;
+}
+
+input{
+    margin: 10px;
+}
+
+input[type=checkbox] {
+    transform: scale(2);
+}
+
+h1, h2{text-align: center;}
+
+h3{
+    font-size: x-large;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.question{
+    padding: 20px;
+    border-radius: 15px;
+    border: solid black 3pt;
+}
+
+.bottom-buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.list{
+    text-align: left !important;
+}
+
+/*.result{
+    display: flex;
+    flex-direction: column;
+    max-width: 50vw;
+}*/
+
+.option{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    margin: 20px;
+}
+
+.option div{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.option div div{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    min-width: 270px;
+}
+
+.option img{
+    width: 20%;
+    min-width: 150px;
+    max-width: 200px;
+    max-height: 300px;
+}
+
+.option *{
+    margin: 0px;
+}

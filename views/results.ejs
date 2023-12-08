@@ -1,0 +1,17 @@
+<%- include("partials/head.ejs") %>
+    <h2>Current Votes</h2>
+    <div class="container">
+        <% for (let i = 0; i < poll.length; i++){ %>
+        <div class="result">
+            <h3><%= poll[i].question %></h3>
+            <table>
+                <tr><th>Cover Art</th><th>Movie</th><th>Votes</th></tr>
+                <% for (let k = 0; k < poll[i].options.length; k++){ %>
+                    <tr><td><img class="tiny" src="<%= poll[i].image[k] %>" alt="<%= poll[i].info[k].title %> title image"></td><td><%= poll[i].info[k].title %></td><td><%= poll[i].votes[k]%></td></tr>
+                <% } %>
+            </table>
+        </div>
+        <% } %>
+    </div>
+</body>
+</html>

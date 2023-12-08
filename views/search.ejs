@@ -1,0 +1,19 @@
+<%- include("partials/head.ejs") %>
+<form action="/search" method="POST">
+    <input type="text" name="searchBox">
+    <input type="submit" value="Search!">
+</form>
+<div>
+    <% if (locals.content){ %>
+        <table>
+            <tr><th>Title</th><th>Year</th><th>ItemID</th></tr>
+            <% for (let i = 0; i < content.SearchHints.length; i++){ %>
+                <tr>
+                    <td class="list"><%= content.SearchHints[i].Name %></td>
+                    <td><%= content.SearchHints[i].ProductionYear %></td>
+                    <td><%= content.SearchHints[i].ItemId %></td>
+                </tr>
+            <% } %>
+        </table>
+    <% } %>
+</div>
