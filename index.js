@@ -114,17 +114,49 @@ app.post("/manage", async (req, res) => {
 
   //parse input to remove items from list
   for (let i = 0; i < Object.keys(req.body).length; i++){
-    //console.log(Object.keys(req.body)[i] + " " + req.body[Object.keys(req.body)[i]]);
-    for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
-      var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
-      poll[questionNumber].options = poll[questionNumber].options.filter(e => e !== req.body[Object.keys(req.body)[i]][k]);
-      console.log("Movies Removed")
-      console.log(req.body[Object.keys(req.body)[i]][k]);
+    if (typeof req.body[Object.keys(req.body)[i]] === "object"){
+      for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
+        //Listed out as multiple variables to make easier to follow.
+        var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
+        var itemToRemove = req.body[Object.keys(req.body)[i]][k];
+        var itemToRemoveIndex = getIndex(questionNumber, itemToRemove);
+        removeIndex(questionNumber, itemToRemoveIndex);
+
+        console.log("Movies Removed");
+        console.log(req.body[Object.keys(req.body)[i]][k]);
+      }
+    } else if (typeof req.body[Object.keys(req.body)[i]] === "string"){
+      var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length);
+      var itemToRemoveIndex = getIndex(questionNumber, req.body[Object.keys(req.body)[i]]);
+      removeIndex(questionNumber, itemToRemoveIndex);
     }
   }
+ 
+//
 
-  res.render("manage.ejs", {poll: poll});
+  res.redirect("/manage");
 })
+
+function getIndex(question, matchString){
+  for (let i = 0; i < poll[question].options.length; i++){
+    if (poll[question].options[i] === matchString){
+      return i;
+    }
+  }
+  console.log("Item not found");
+  return null;
+}
+
+function removeIndex(question, killIndex){
+  if (killIndex !== null){
+    poll[question].options.splice(killIndex, 1);
+    poll[question].info.splice(killIndex, 1);
+    poll[question].votes.splice(killIndex, 1);
+    poll[question].image.splice(killIndex, 1);
+  } else {
+    console.log("NO Item Removed")
+  }
+}
 
 //Create a new poll list for movies
 app.post("/create-list", async (req, res) => {
