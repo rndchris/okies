@@ -52,10 +52,6 @@ input{
     margin: 10px;
 }
 
-input[type=checkbox] {
-    transform: scale(2);
-}
-
 h1, h2{text-align: center;}
 
 h3{
@@ -99,26 +95,35 @@ h3{
 }*/
 
 .option{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 35px;
+    display: grid;
+    grid-template-columns: 30px 100%;
     margin: 20px;
+    align-content: center;
+    border-top: solid black;
+    padding-top: 25px;
 }
 
 .option div{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
     align-items: center;
+    align-content: center;
     justify-content: center;
-    gap: 25px;
 }
 
+.option > div{margin-left: 20px;}
+
 .option div div{
+    display: grid;
+    grid-template-columns: 4fr 6fr 3fr;
+    min-width: 270px;
+    margin: 20px;
+    text-align: center;
+}
+
+.option div div div{
     display: flex;
     flex-direction: column;
-    width: 75%;
-    min-width: 270px;
 }
 
 .option img{
@@ -130,4 +135,26 @@ h3{
 
 .option *{
     margin: 0px;
+}
+
+@media (max-aspect-ratio: 4/3){
+    .option div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .option div div{
+        display: flex;
+        flex-direction: column;
+        min-width: 270px;
+        margin: 20px
+    }
+
+    .option div div p{
+        margin-right: 20px;
+    }
+}
+
+h4{
+    padding-top: 15px
 }

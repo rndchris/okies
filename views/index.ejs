@@ -13,10 +13,12 @@
                                     <img src="<%= poll[i].image[k] %>" alt="<%= poll[i].info[k].title %> title image">
                                 </a>
                                 <div>
-                                    <h3><%= poll[i].info[k].title %></h3>
-                                    <h4>Audience Rating: <%= poll[i].info[k].communityRating %>/10</h4>
-                                    <h4><%= poll[i].info[k].taglines %></h4>
+                                    <div>
+                                        <h3><%= poll[i].info[k].title %></h3>
+                                        <h4><%= poll[i].info[k].taglines %></h4>
+                                    </div>
                                     <p><%= poll[i].info[k].overview %></p>
+                                    <h4>Audience Rating: <%= poll[i].info[k].communityRating %>/10</h4>
                                 </div>
                             </div>
                         </div>
