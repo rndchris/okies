@@ -1,11 +1,17 @@
 <%- include("partials/head.ejs") %>
+<%- include("partials/background.ejs") %>
 
     <form action="/submit" method="POST">
         <div class="container">
             <% for (var i = 0; i < poll.length; i++) { %>
                 <div class="question">
-                    <h3><%= poll[i].question %></h3>
+                    <div class="question-top">
+                        <h3><%= poll[i].question %></h3>
+                        <a href="/search"><div class="button">Propose Additional Movies</div></a>
+                    </div>
+                    
                     <% for (var k = 0; k < poll[i].options.length; k++) {%>
+                        
                         <div class="option">
                             <input type="checkbox" value="<%= k %>" id="q<%= i %>o<%= k %>" name="q<%= i %>">
                             <div>
@@ -30,6 +36,5 @@
             <div><input type="submit" value="Submit" class="button"></div>
         </div>
     </form>
-    <a href="/search">Propose Additional Movies</a>
 </body>
 </html>

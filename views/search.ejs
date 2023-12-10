@@ -1,17 +1,18 @@
 <%- include("partials/head.ejs") %>
+<%- include("partials/background.ejs") %>
     <div class="container">
         <div class="question">
             <h3>Library Search</h3>
-            <form action="/search" method="POST">
-                <input type="text" name="searchBox">
-                <input type="submit" value="Search!">
-            </form>
-            <a href="/">Return to Voting</a><br>
-            <a href="/results">Results</a>
+                <form class="search-bar" action="/search" method="POST">
+                    <input type="text" name="searchBox">
+                    <input class="button" type="submit" value="Search!">
+                    <a href="/"><div class="button">Return to Voting</div></a>
+                    <a href="/results"><div class="button">Results</div></a>
+                </form>
         </div>
         
-        <div class="question">
         <% if (locals.content){ %>
+            <div class="question">
             <table>
                 <tr><th>Title</th><th>Year</th><th>Add to Poll</th></tr>
                 <% for (let i = 0; i < content.SearchHints.length; i++){ %>
@@ -35,6 +36,6 @@
                     </tr>
                 <% } %>
             </table>
+            </div>
         <% } %>
-        </div>
     </div>
