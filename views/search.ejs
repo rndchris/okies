@@ -1,36 +1,40 @@
 <%- include("partials/head.ejs") %>
-    <h3>Library Search</h3>
-    <form action="/search" method="POST">
-        <input type="text" name="searchBox">
-        <input type="submit" value="Search!">
-    </form>
-    <a href="/">Return to Voting</a><br>
-    <a href="/results">Results</a>
-
-<div>
-    <% if (locals.content){ %>
-        <table>
-            <tr><th>Title</th><th>Year</th><th>Add to Poll</th></tr>
-            <% for (let i = 0; i < content.SearchHints.length; i++){ %>
-                <tr>
-                    <td class="list"><%= content.SearchHints[i].Name %></td>
-                    <td><%= content.SearchHints[i].ProductionYear %></td>
-                    <td>
-                        <form action="/add" method="POST">
-                            <select name="question">
-                                <% for (let k = 0; k < poll.length; k++){ %>
-                                    <option id="dropdown" value="<%= k %>">List <%= k %></option>
-                                <% } %>
-                            </select>
-                            <input type="hidden" name="itemID" value="<%= content.SearchHints[i].ItemId %>" id="itemID">
-                            <input
-                                type="submit"
-                                id="<%= content.SearchHints[i].ItemId %>"
-                                value="Add">
-                        </form>
-                    </td>
-                </tr>
-            <% } %>
-        </table>
-    <% } %>
-</div>
+    <div class="container">
+        <div class="question">
+            <h3>Library Search</h3>
+            <form action="/search" method="POST">
+                <input type="text" name="searchBox">
+                <input type="submit" value="Search!">
+            </form>
+            <a href="/">Return to Voting</a><br>
+            <a href="/results">Results</a>
+        </div>
+        
+        <div class="question">
+        <% if (locals.content){ %>
+            <table>
+                <tr><th>Title</th><th>Year</th><th>Add to Poll</th></tr>
+                <% for (let i = 0; i < content.SearchHints.length; i++){ %>
+                    <tr>
+                        <td class="list"><%= content.SearchHints[i].Name %></td>
+                        <td><%= content.SearchHints[i].ProductionYear %></td>
+                        <td>
+                            <form action="/add" method="POST">
+                                <select name="question">
+                                    <% for (let k = 0; k < poll.length; k++){ %>
+                                        <option id="dropdown" value="<%= k %>">List <%= k %></option>
+                                    <% } %>
+                                </select>
+                                <input type="hidden" name="itemID" value="<%= content.SearchHints[i].ItemId %>" id="itemID">
+                                <input
+                                    type="submit"
+                                    id="<%= content.SearchHints[i].ItemId %>"
+                                    value="Add">
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        <% } %>
+        </div>
+    </div>

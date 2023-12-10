@@ -6,7 +6,7 @@
                 <h2>Add Items To Lists</h2>
             </a>
         </div>
-        <form action="/manage" method="POST">
+        <form action="/manage" method="POST" class="container">
                 <div class="question">
                     <h2>Remove Items From Lists</h2>
                     <p>Check boxes below, and then press remove to remove movies from the list</p>
@@ -36,16 +36,17 @@
         </form>
 </div>
 <hr>
-<div class="question">
-    <h2>Save My Polls to Server Disk</h2>
-    <form action="/save" method="POST">
-        <input type="hidden" name="save" value="save">
-        <input type="submit" value="Save">
-    </form>
-</div>
 </div>
 <h2>List Management</h2>
 <div class="container">
+    <div class="question">
+        <h2>Save My Polls to Server Disk</h2>
+        <form action="/save" method="POST">
+            <input type="hidden" name="save" value="save">
+            <input type="submit" value="Save">
+        </form>
+    </div>
+    <h2 class="question">List Management</h2>
     <div class="question">
         <h2>Add List</h2>
         <form action="/create-list" method="POST">

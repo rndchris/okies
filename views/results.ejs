@@ -1,8 +1,10 @@
 <%- include("partials/head.ejs") %>
-    <h2>Current Votes</h2>
     <div class="container">
+        <div class="question">
+            <h2>Current Votes</h2>
+        </div>
         <% for (let i = 0; i < poll.length; i++){ %>
-        <div class="result">
+        <div class="result question">
             <h3><%= poll[i].question %></h3>
             <table>
                 <tr><th>Cover Art</th><th>Movie</th><th>Votes</th></tr>
