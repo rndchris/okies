@@ -40,7 +40,7 @@
 </div>
 <div class="container">
     <div class="question">
-        <h2>Save My Polls to Server Disk</h2>
+        <h2>Set Poll as Default</h2>
         <div class="bottom-buttons">
             <form action="/save" method="POST">
                 <input type="hidden" name="save" value="save">
@@ -49,23 +49,26 @@
         </div>
     </div>
     <div class="question">
-        <h2>Create a JSON of Current Poll</h2>
-        <div class="bottom-buttons">
-            <a href="/poll">
-                <div class="button">Get JSON</div>
-            </a>
+        <h2>Export/Import Poll</h2>
+        <div class="question">
+            <h2>Create a JSON of Current Poll</h2>
+            <div class="bottom-buttons">
+                <a href="/poll">
+                    <div class="button">Export JSON</div>
+                </a>
+            </div>
+            <p>This poll can be restored by POSTing the JSON to the /poll API Endpoint or pasting the JSON text.</p>
         </div>
-        <p>This poll can be restored by POSTing the JSON to the /poll API Endpoint or pasting the JSON text.</p>
-    </div>
-    <div class="question">
-        <h2>Restore Poll from JSON Text</h2>
-        <div class="bottom-buttons">
-            <form action="/pollfile" method="POST">
-                <input type="text" name="pollText">
-                <input class="button" type="submit" value="Restore Poll">
-            </form>
+        <div class="question">
+            <h2>Import from JSON Text</h2>
+            <div class="bottom-buttons">
+                <form action="/pollfile" method="POST">
+                    <input type="text" name="pollText">
+                    <input class="button" type="submit" value="Import Poll">
+                </form>
+            </div>
+            <p>Paste JSON text in the input box above, and then press Import Poll.</p>
         </div>
-        <p>Paste JSON text in the input box above, and then press restore poll.</p>
     </div>
     <div class="question">
         <h2>List Management</h2>

@@ -8,22 +8,26 @@ const port = 3500;
 var apiKey;
 var apiURL;
 var userID;
+var config;
 var poll = [];
 
 //read in config file and poll JSON at startup
 fs.readFile("./config.json", "utf8", (err, data) => {
-  if (err) throw err;
-  var config = JSON.parse(data);
-  apiKey = config.jellyfinKey.valueOf();
-  userID = config.jellyfinUserID.valueOf();
-  apiURL = config.jellyfinURL.valueOf();
-  if (config.loadJSON){
-    fs.readFile(config.pollJSON, "utf8", (err, data) => {
-      if (err) throw err;
-      poll = JSON.parse(data);
-      updateOptions();
-      softZeroVotes(poll);
-    });
+  try {
+    config = JSON.parse(data);
+    apiKey = config.jellyfinKey.valueOf();
+    userID = config.jellyfinUserID.valueOf();
+    apiURL = config.jellyfinURL.valueOf();
+    if (config.loadJSON){
+      fs.readFile(config.pollJSON, "utf8", (err, data) => {
+        if (err) throw err;
+        poll = JSON.parse(data);
+        updateOptions();
+        softZeroVotes(poll);
+      });
+    }
+  } catch {
+    console.log("Issue reading config or input file")
   }
 })
 
