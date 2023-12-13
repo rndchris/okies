@@ -49,6 +49,25 @@
         </div>
     </div>
     <div class="question">
+        <h2>Create a JSON of Current Poll</h2>
+        <div class="bottom-buttons">
+            <a href="/poll">
+                <div class="button">Get JSON</div>
+            </a>
+        </div>
+        <p>This poll can be restored by POSTing the JSON to the /poll API Endpoint or pasting the JSON text.</p>
+    </div>
+    <div class="question">
+        <h2>Restore Poll from JSON Text</h2>
+        <div class="bottom-buttons">
+            <form action="/pollfile" method="POST">
+                <input type="text" name="pollText">
+                <input class="button" type="submit" value="Restore Poll">
+            </form>
+        </div>
+        <p>Paste JSON text in the input box above, and then press restore poll.</p>
+    </div>
+    <div class="question">
         <h2>List Management</h2>
         <div class="question">
             <h2>Add List</h2>
@@ -75,6 +94,14 @@
             <form action="/reset" method="POST">
                 <input type="hidden" name="reset" value="reset">
                 <input class="button" type="submit" value="RESET ALL VOTES">
+            </form>
+        </div>
+    </div>
+    <div class="question">
+        <h2>Nuke Poll</h2>
+        <div class="bottom-buttons">
+            <form action="/nuke" method="POST">
+                <input class="button" type="submit" value="Delete Entire Poll">
             </form>
         </div>
     </div>

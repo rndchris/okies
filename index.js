@@ -49,6 +49,7 @@ function zeroVotes(poll){
 
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.render("./index.ejs", {
@@ -217,6 +218,71 @@ app.get("/userID", async (req, res) => {
       res.status(404).send(error.message);
   }
 })
+
+//Okies API Endpoints
+app.get("/poll", async (req, res) => {
+  let pollJSON = []
+  for (let i = 0; i < poll.length; i++){
+    pollJSON[i] = {
+      question: poll[i].question,
+      id: i,
+      options: [],
+    }
+    for (let j = 0; j < poll[i].options.length; j++){
+      let option = {
+        title: poll[i].info[j].title,
+        taglines: poll[i].info[j].taglines,
+        description: poll[i].info[j].overview,
+        communityRating: poll[i].info[j].communityRating,
+        jellyfinID: poll[i].options[j],
+        votes: poll[i].votes[j]
+      }
+      pollJSON[i].options.push(option);
+    }
+  }
+  res.json(pollJSON);
+})
+
+//replace poll
+app.put("/poll", async (req, res) => {
+  let pollJSON = req.body;
+  parsePollJSON(pollJSON);
+  const success = {
+    status: "complete",
+  }
+  res.json(success);
+})
+
+async function parsePollJSON(pollJSON){
+  poll = [];
+  //console.log(req.body);
+  for (let i = 0; i < pollJSON.length; i++){
+    poll[pollJSON[i].id] = {
+      question: pollJSON[i].question,
+      options: [],
+      info: [],
+      votes: [],
+      image: [],
+    }
+    for (let j = 0; j < pollJSON[i].options.length; j++){
+      poll[i].options.push(pollJSON[i].options[j].jellyfinID)
+      poll[i].votes.push(pollJSON[i].options[j].votes)
+    }
+  }
+  await updateOptions();
+}
+
+app.post("/nuke", async (req, res) => {
+  poll = [];
+  console.log(req);
+  res.redirect("/manage");
+});
+
+app.post("/pollfile", async (req, res) => {
+  console.log(req.body);
+  await parsePollJSON(JSON.parse(req.body.pollText));
+  res.redirect("/manage");
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
