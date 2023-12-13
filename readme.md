@@ -2,19 +2,16 @@
 A program to make it easier to pick movies to watch in a group. Make a list of the movies you're interested in watching, and then vote on which movies everyone is willing to watch.
 
 ## Screenshots
-Yes, at present, it looks like something right out of the 90s, and the CSS is a little wonky in places. however, it is functional. Future updates I'm planning on making it look prettier and more modern.
 
-This is how the polls currently look.  
-
-<img src="screenshots/poll-sample.png" alt="Poll Sample" width="300"/>
+<img src="screenshots/poll-sample.png" alt="Poll Sample" width="400"/>
 
 The search and add movies screen.
 
-<img src="screenshots/search.png" alt="Search" width="300"/>
+<img src="screenshots/search.png" alt="Search" width="400"/>
 
 The results screen.  
 
-<img src="screenshots/results.png" alt="Results" width="300"/>
+<img src="screenshots/results.png" alt="Results" width="400"/>
 
 
 ## Installing
