@@ -65,15 +65,26 @@ app.post("/submit", (req, res) => {
   console.log("Ballot Recieved");
 
   //Tally votes from ballot
-  for (let i = 0; i < Object.keys(req.body).length; i++){
-    //Preserve this line for potential testing
-    //console.log(Object.keys(req.body)[i] + " " + req.body[Object.keys(req.body)[i]]);
-    for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
-      var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
-      poll[questionNumber].votes[req.body[Object.keys(req.body)[i]][k]]++; //add vote
+  console.log(req.body.length + " " + poll.length)
+  if (Object.keys(req.body).length <= poll.length){
+    for (let i = 0; i < Object.keys(req.body).length; i++){
+      //Preserve this line for potential testing
+      //console.log(Object.keys(req.body)[i] + " " + req.body[Object.keys(req.body)[i]]);
+      if (req.body[Object.keys(req.body)[i]].length <= poll[i].options.length){
+        for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
+          var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
+          poll[questionNumber].votes[req.body[Object.keys(req.body)[i]][k]]++; //add vote
+        }
+      } else {
+        res.send("Something went wrong: More votes than options?");
+        return;
+      }
     }
+    res.redirect("/results");
+  } else {
+    res.send("Something went wrong");
+    console.log("More Qs submitted than in poll")
   }
-  res.redirect("/results");
 });
 
 app.get("/results", (req, res) => {
@@ -117,22 +128,26 @@ app.post("/manage", async (req, res) => {
   console.log(req.body)
 
   //parse input to remove items from list
-  for (let i = 0; i < Object.keys(req.body).length; i++){
-    if (typeof req.body[Object.keys(req.body)[i]] === "object"){
-      for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
-        //Listed out as multiple variables to make easier to follow.
-        var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
-        var itemToRemove = req.body[Object.keys(req.body)[i]][k];
-        var itemToRemoveIndex = getIndex(questionNumber, itemToRemove);
-        removeIndex(questionNumber, itemToRemoveIndex);
+  if (Object.keys(req.body).length <= poll.length){
+    for (let i = 0; i < Object.keys(req.body).length; i++){
+      if (typeof req.body[Object.keys(req.body)[i]] === "object"){
+        if (req.body[Object.keys(req.body)[i]].length <= poll[i].options.length){
+          for (let k = 0; k < req.body[Object.keys(req.body)[i]].length; k++){
+            //Listed out as multiple variables to make easier to follow.
+            var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length); //get q#
+            var itemToRemove = req.body[Object.keys(req.body)[i]][k];
+            var itemToRemoveIndex = getIndex(questionNumber, itemToRemove);
+            removeIndex(questionNumber, itemToRemoveIndex);
 
-        console.log("Movies Removed");
-        console.log(req.body[Object.keys(req.body)[i]][k]);
+            console.log("Movies Removed");
+            console.log(req.body[Object.keys(req.body)[i]][k]);
+          }
+        }
+      } else if (typeof req.body[Object.keys(req.body)[i]] === "string"){
+        var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length);
+        var itemToRemoveIndex = getIndex(questionNumber, req.body[Object.keys(req.body)[i]]);
+        removeIndex(questionNumber, itemToRemoveIndex);
       }
-    } else if (typeof req.body[Object.keys(req.body)[i]] === "string"){
-      var questionNumber = Object.keys(req.body)[i].slice(1, Object.keys(req.body)[i].length);
-      var itemToRemoveIndex = getIndex(questionNumber, req.body[Object.keys(req.body)[i]]);
-      removeIndex(questionNumber, itemToRemoveIndex);
     }
   }
  
