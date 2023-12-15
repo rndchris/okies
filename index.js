@@ -264,11 +264,15 @@ app.get("/poll", async (req, res) => {
 //replace poll
 app.put("/poll", async (req, res) => {
   let pollJSON = req.body;
-  parsePollJSON(pollJSON);
-  const success = {
-    status: "complete",
+  if (typeof pollJSON == 'string' || pollJSON.indexOf("..") == -1){
+    parsePollJSON(pollJSON);
+    const success = {
+      status: "complete",
+    }
+    res.json(success);
+  } else {
+    res.send("Something went wrong")
   }
-  res.json(success);
 })
 
 async function parsePollJSON(pollJSON){
