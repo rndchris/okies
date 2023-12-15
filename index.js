@@ -65,7 +65,6 @@ app.post("/submit", (req, res) => {
   console.log("Ballot Recieved");
 
   //Tally votes from ballot
-  console.log(req.body.length + " " + poll.length)
   if (Object.keys(req.body).length <= poll.length){
     for (let i = 0; i < Object.keys(req.body).length; i++){
       //Preserve this line for potential testing
@@ -210,9 +209,12 @@ app.post("/reset", async (req, res) => {
 app.post("/save", async (req, res) => {
   console.log(req.body);
   console.log("Saving poll to disk");
-  fs.writeFile("./save.json", JSON.stringify(poll),(err, data) => {
-    if (err) throw err;
-  })
+  try {
+    fs.writeFile("./save.json", JSON.stringify(poll),(err, data) => {
+    })
+  } catch {
+    console.log("File Write Error!")
+  }
   res.redirect("/results");
 })
 
