@@ -20,7 +20,6 @@ fs.readFile("./config.json", "utf8", (err, data) => {
     apiURL = config.jellyfinURL.valueOf();
     if (config.loadJSON){
       fs.readFile(config.pollJSON, "utf8", (err, data) => {
-        if (err) throw err;
         poll = JSON.parse(data);
         updateOptions();
         softZeroVotes(poll);
